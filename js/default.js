@@ -1,5 +1,4 @@
-//FileStart:default.js 
-var mesh1, mesh2;
+ var mesh1, mesh2;
  var newMeshReady = false;
  var sizeMesh1 = 22;
  var sizeMesh2 = 8;
@@ -12,25 +11,24 @@ var mesh1, mesh2;
  var time1 = 0;
  var time0 = 0;
  var windowWidth = window.innerWidth, windowHeight = window.innerHeight;
- //LEIA_initAPI(true);
+
  var scene,camera,renderer;
  Init();
- readSTLs('https://holodevuserresource.s3.amazonaws.com/apple2.stl'); 
+ readSTLs('resource/apple2.stl'); 
  animate();
  function Init(){
  		scene = new THREE.Scene();
- 		var VIEW_ANGLE = 2.64, ASPECT = windowWidth / windowHeight, NEAR = 0.1, FAR = 10000;
- 		camera = new LeiaCamera( VIEW_ANGLE, ASPECT, NEAR, FAR);
- 		camera.position.set(0,0,50);	
- 		scene.add(camera);
+
+		//setup camera
+ 		camera = new LeiaCamera();
+        camera.position.copy(_camPosition);
+        camera.lookAt(_tarPosition);
+		
  		renderer = new LeiaWebGLRenderer({
-         antialias:true, 
- 		renderMode: _renderMode, 
- 		camPanelVisible: _camPanelVisible, 
- 		gyroPanelVisible: _gyroPanelVisible,
- 		camFov: _camFov,    
+        antialias:true, 
+ 		renderMode: _renderMode,  
 		devicePixelRatio: 1 
-      } );
+        } );
  		renderer.Leia_setSize( windowWidth, windowHeight );
  		document.body.appendChild( renderer.domElement );
  		
@@ -84,8 +82,6 @@ var mesh1, mesh2;
  		mesh1.rotation.y = omega1*time_s;
  		mesh2.rotation.y = omega2*time_s;
  	}
- 	//LEIA_render( scene, camera);
- renderer.setClearColor(new THREE.Color().setRGB(1.0, 1.0, 1.0)); 
-	renderer.Leia_render(scene, camera);
+    renderer.setClearColor(new THREE.Color().setRGB(1.0, 1.0, 1.0)); 
+	renderer.Leia_render(scene, camera,undefined,undefined,_holoScreenScale,_camFov,_messageFlag);
  }
- //FileEnd
