@@ -23,6 +23,7 @@
  		camera = new LeiaCamera();
         camera.position.copy(_camPosition);
         camera.lookAt(_tarPosition);
+        scene.add(camera);
 		
  		renderer = new LeiaWebGLRenderer({
         antialias:true, 
